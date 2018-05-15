@@ -1,10 +1,11 @@
 Working on a simple notepad in Java
 
 TODO:
--Proper save dialogue
--Open dialogue opens from notepad location
+-(Critical) fix text moving to newline when adding to the end of a line
 -Font support
+-Font weight
+-Font size
 -More toolbar options
--(Maybe) Shortcut implementation
 -Better encapsulation
 -Better program aesthetics 
+-(Maybe) Shortcut implementation

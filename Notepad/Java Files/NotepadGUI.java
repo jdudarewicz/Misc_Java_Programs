@@ -1,3 +1,4 @@
+//Imports
 import javax.swing.*;
 import javax.swing.filechooser.*;
 import java.awt.*;
@@ -76,7 +77,7 @@ public class NotepadGUI extends JFrame{
 
         class saveButton implements ActionListener {
             public void actionPerformed(ActionEvent e) {
-                chooseFile();
+                saveFile();
 
                 if(current != null) {
                     try {
@@ -97,6 +98,7 @@ public class NotepadGUI extends JFrame{
         final JFileChooser fc = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
         fc.setFileFilter(filter);
+        fc.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
         int returned = fc.showOpenDialog(null);
 
         if(returned == fc.APPROVE_OPTION) {
@@ -105,8 +107,21 @@ public class NotepadGUI extends JFrame{
         }
     }
 
+    private void saveFile() {
+        final JFileChooser fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
+        fc.setFileFilter(filter);
+        fc.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
+        int returned = fc.showSaveDialog(null);
+
+        if(returned == fc.APPROVE_OPTION) {
+            current = new File(fc.getSelectedFile().getName());
+            filePath = fc.getSelectedFile().getParent();
+        }
+    }
+
     private void readIn() throws IOException {
-        FileInputStream fis = new FileInputStream(filePath + "\\" + current.getName());
+        FileInputStream fis = new FileInputStream(filePath + System.getProperty("file.separator") + current.getName());
 
         editing = "";
         int next = fis.read();
@@ -121,7 +136,7 @@ public class NotepadGUI extends JFrame{
 
     private void readOut() throws IOException {
         BufferedReader reader = new BufferedReader(new StringReader(textArea.getText()));
-        PrintWriter writer = new PrintWriter(new FileWriter(filePath + "\\" + current.getName()));
+        PrintWriter writer = new PrintWriter(new FileWriter(filePath + System.getProperty("file.separator") + current.getName()));
 
         String line = reader.readLine();
         while(line != null) {
