@@ -1,5 +1,7 @@
 //Imports
 import javax.swing.*;
+import java.util.*;
+import javax.swing.border.Border;
 import javax.swing.filechooser.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -122,12 +124,13 @@ public class NotepadGUI extends JFrame{
 
     private void readIn() throws IOException {
         FileInputStream fis = new FileInputStream(filePath + System.getProperty("file.separator") + current.getName());
-
         editing = "";
-        int next = fis.read();
-        while(next != -1){
-            editing = editing + (char)next;
-            next = fis.read();
+        boolean done = false;
+
+        while(!done){
+            int next = fis.read();
+            if(next == -1) done = true;
+            else editing = editing + (char)next;
         }
 
         textArea.setText(editing);
@@ -135,16 +138,8 @@ public class NotepadGUI extends JFrame{
     }
 
     private void readOut() throws IOException {
-        BufferedReader reader = new BufferedReader(new StringReader(textArea.getText()));
-        PrintWriter writer = new PrintWriter(new FileWriter(filePath + System.getProperty("file.separator") + current.getName()));
-
-        String line = reader.readLine();
-        while(line != null) {
-            writer.println(line);
-            line = reader.readLine();
-        }
-
-        writer.close();
-        reader.close();
+        FileWriter out = new FileWriter(filePath + System.getProperty("file.separator") + current.getName());
+        out.write(textArea.getText());
+        out.close();
     }
 }
