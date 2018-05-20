@@ -1,10 +1,8 @@
 //Imports
-import javax.swing.*;
-import java.util.*;
-import javax.swing.border.Border;
 import javax.swing.filechooser.*;
-import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 
 public class NotepadGUI extends JFrame{
@@ -21,6 +19,9 @@ public class NotepadGUI extends JFrame{
     private String filePath;
     private String editing;
 
+    /*
+    * Creates main Notepad GUI, adding all the main elements
+    */
     public NotepadGUI() {
         mainPanel = new JPanel();
 
@@ -28,7 +29,6 @@ public class NotepadGUI extends JFrame{
 
         createToolBar();
         createTextArea();
-
         mainPanel.add(toolBar, BorderLayout.NORTH);
         mainPanel.add(scrollPane);
 
@@ -54,6 +54,7 @@ public class NotepadGUI extends JFrame{
 
     private void createOpenButton() {
         openButton = new JButton("Open");
+        openButton.setIcon(UIManager.getIcon("FileView.directoryIcon"));
 
         class OpenButton implements ActionListener {
             public void actionPerformed(ActionEvent e) {
@@ -76,6 +77,7 @@ public class NotepadGUI extends JFrame{
 
     private void createSaveButton() {
         saveButton = new JButton("Save");
+        saveButton.setIcon(UIManager.getIcon("FileView.fileIcon"));
 
         class saveButton implements ActionListener {
             public void actionPerformed(ActionEvent e) {
@@ -101,7 +103,7 @@ public class NotepadGUI extends JFrame{
         FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
         fc.setFileFilter(filter);
         fc.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
-        int returned = fc.showOpenDialog(null);
+        int returned = fc.showOpenDialog(mainPanel);
 
         if(returned == fc.APPROVE_OPTION) {
             current = new File(fc.getSelectedFile().getName());
@@ -114,7 +116,7 @@ public class NotepadGUI extends JFrame{
         FileNameExtensionFilter filter = new FileNameExtensionFilter("txt", "txt");
         fc.setFileFilter(filter);
         fc.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
-        int returned = fc.showSaveDialog(null);
+        int returned = fc.showSaveDialog(mainPanel);
 
         if(returned == fc.APPROVE_OPTION) {
             current = new File(fc.getSelectedFile().getName());
