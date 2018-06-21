@@ -1,0 +1,7 @@
+Canada 36290000
+United States 325700000
+United Kingdom 65640000
+Russia 144300000
+Japan 127000000
+Austrailia 24130000
+
